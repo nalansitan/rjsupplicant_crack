@@ -8,6 +8,7 @@ sudo iptables -P INPUT ACCEPT
 sudo iptables -P FORWARD ACCEPT
 sudo iptables -t nat -A POSTROUTING -o ${WAN} -j MASQUERADE
 sudo iptables -A FORWARD -i ${LAN} -j ACCEPT
+sudo iptables -t nat -A POSTROUTING -s ${lan_ip}0/24 -j SNAT --to-source ${wan_ip}
 sudo ifconfig ${LAN} "${lan_ip}0" broadcast "${lan_ip}255" netmask 255.255.255.0
 my_ip=`ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' |grep -v "${lan_ip}1" |cut -d: -f2 | awk '{ print $1}'`
 sudo nohup /usr/sbin/dhcpd  -d -cf /etc/dhcp/dhcpd.conf ${LAN} >/tmp/dhcpd.list &
