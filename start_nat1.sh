@@ -4,6 +4,7 @@ lan_ip="192.168.111."
 WAN="eth0"
 LAN="eth1"
 sudo iptables -F
+sudo iptables -F -t nat
 sudo iptables -P INPUT ACCEPT
 sudo iptables -P FORWARD ACCEPT
 sudo iptables -t nat -A POSTROUTING -o ${WAN} -j MASQUERADE
